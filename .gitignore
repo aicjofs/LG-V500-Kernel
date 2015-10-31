@@ -47,6 +47,7 @@ modules.builtin
 /System.map
 /Module.markers
 /Module.symvers
+!.gitignore
 
 #
 # Debian directory (make deb-pkg)
@@ -86,4 +87,8 @@ GTAGS
 
 *.orig
 *~
+scripts/basic/fixdep
+scripts/kconfig/conf
+lib/gen_crc32table
+
 \#*#
