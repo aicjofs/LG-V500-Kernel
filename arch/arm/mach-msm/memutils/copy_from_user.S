@@ -1,4 +1,4 @@
-*
+/*
  *  linux/arch/arm/lib/copy_from_user.S
  *
  *  Author:	Nicolas Pitre
