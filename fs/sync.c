@@ -101,7 +101,7 @@ static void sync_one_sb(struct super_block *sb, void *arg)
  * Sync all the data for all the filesystems (called by sys_sync() and
  * emergency sync)
  */
-static void sync_filesystems(int wait)
+void sync_filesystems(int wait)
 {
 	iterate_supers(sync_one_sb, &wait);
 }
@@ -115,9 +115,11 @@ EXPORT_SYMBOL_GPL(sync_filesystems);
  */
 SYSCALL_DEFINE0(sync)
 {
+	int nowait = 0, wait = 1;
+
 	wakeup_flusher_threads(0, WB_REASON_SYNC);
-	sync_filesystems(0);
-	sync_filesystems(1);
+	iterate_supers(sync_one_sb, &nowait);
+	iterate_supers(sync_one_sb, &wait);
 	if (unlikely(laptop_mode))
 		laptop_sync_completion();
 	return 0;
@@ -129,8 +131,11 @@ static void do_sync_work(struct work_struct *work)
 	 * Sync twice to reduce the possibility we skipped some inodes / pages
 	 * because they were temporarily locked
 	 */
-	sync_filesystems(0);
-	sync_filesystems(0);
+
+	int nowait = 0;
+
+	iterate_supers(sync_one_sb, &nowait);
+	iterate_supers(sync_one_sb, &nowait);
 	printk("Emergency Sync complete\n");
 	kfree(work);
 }
