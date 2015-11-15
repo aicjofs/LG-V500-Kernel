@@ -49,7 +49,7 @@ ifdef CONFIG_ARCH_MSM8625
 else
 	obj-$(CONFIG_SMP) += platsmp.o
 endif
-obj-$(CONFIG_HOTPLUG_CPU) += hotplug.o dyn_hotplug.o
+obj-$(CONFIG_HOTPLUG_CPU) += hotplug.o
 
 obj-$(CONFIG_MSM_AVS_HW) += avs.o
 obj-$(CONFIG_CPU_V6) += idle-v6.o
@@ -391,3 +391,6 @@ obj-$(CONFIG_MSM_CPU_PWRCTL) +=  msm_cpu_pwrctl.o
 obj-$(CONFIG_ARCH_RANDOM) += early_random.o
 
 obj-$(CONFIG_HAS_MACH_MEMUTILS) += memutils/
+
+obj-$(CONFIG_LCD_KCAL_STANDALONE) += msm_kcal_ctrl.o
+
